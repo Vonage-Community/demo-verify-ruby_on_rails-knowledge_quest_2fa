@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resource :session
+  resources :passwords, param: :token
   get "pages/home"
   get "pages/authenticated"
   get "pages/two_factor_authenticated"
