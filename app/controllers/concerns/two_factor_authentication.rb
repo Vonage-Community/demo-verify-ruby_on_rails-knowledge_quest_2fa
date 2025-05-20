@@ -38,15 +38,32 @@ module TwoFactorAuthentication
 
     def start_new_otp_verification_for_session
       Current.session.otp_verifications.create!.tap do |verification|
-        # send_otp_to_user
+        send_otp_to_user(verification)
+      end
+    end
+
+    def send_otp_to_user(verification)
+      verification_workflow = [{ channel: 'sms', to: Current.user.phone_number }]
+
+      begin
+        response = Vonage.verify2.start_verification(brand: 'Vonage', workflow: verification_workflow)
+        verification.update!(request_id: response.request_id)
+      rescue Vonage::Error => error
+        logger.debug error.http_response_code
+        logger.debug error.http_response_body
       end
     end
 
     def check_otp(verification_request_id:, otp:)
-      # Check the OTP against the verification request
-      # This is a placeholder for the actual OTP checking logic
-      # In a real application, you would integrate with an OTP service here
-      "200"
+      response = begin
+        Vonage.verify2.check_code(
+          request_id: verification_request_id,
+          code: otp
+        )
+      rescue Vonage::Error => error
+        error
+      end
+      response.http_response.code
     end
 
     def otp_valid?(otp_check)
@@ -54,8 +71,15 @@ module TwoFactorAuthentication
     end
 
     def invalid_otp_response_message(otp_check)
-      # Generate an error message based on the OTP check result
-      # This is a placeholder for the actual error message generation logic
-      "Invalid OTP. Please try again."
+      case otp_check
+      when '400'
+        'The code you entered is invalid.'
+      when '404'
+        'The code you entered has expired.'
+      when '410'
+        'You have reached the maximum number of attempts.'
+      else
+        'Sorry, something went wrong. Please try again later.'
+      end
     end
 end
