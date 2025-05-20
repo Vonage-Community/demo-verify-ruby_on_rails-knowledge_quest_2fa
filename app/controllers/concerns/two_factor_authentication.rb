@@ -43,10 +43,10 @@ module TwoFactorAuthentication
     end
 
     def send_otp_to_user(verification)
-      verification_workflow = [{ channel: 'sms', to: Current.user.phone_number }]
+      verification_workflow = [ { channel: "sms", to: Current.user.phone_number } ]
 
       begin
-        response = Vonage.verify2.start_verification(brand: 'Vonage', workflow: verification_workflow)
+        response = Vonage.verify2.start_verification(brand: "Vonage", workflow: verification_workflow)
         verification.update!(request_id: response.request_id)
       rescue Vonage::Error => error
         logger.debug error.http_response_code
@@ -72,14 +72,14 @@ module TwoFactorAuthentication
 
     def invalid_otp_response_message(otp_check)
       case otp_check
-      when '400'
-        'The code you entered is invalid.'
-      when '404'
-        'The code you entered has expired.'
-      when '410'
-        'You have reached the maximum number of attempts.'
+      when "400"
+        "The code you entered is invalid."
+      when "404"
+        "The code you entered has expired."
+      when "410"
+        "You have reached the maximum number of attempts."
       else
-        'Sorry, something went wrong. Please try again later.'
+        "Sorry, something went wrong. Please try again later."
       end
     end
 end
