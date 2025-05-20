@@ -27,7 +27,7 @@ module TwoFactorAuthentication
     end
 
     def find_last_otp_verification
-      Current.session.otp_verifications.last
+      Current.session.otp_verifications.where.not(request_id: nil).last
     end
 
     def request_otp_verification
