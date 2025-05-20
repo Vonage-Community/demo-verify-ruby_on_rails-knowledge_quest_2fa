@@ -1,0 +1,9 @@
+<h1>OTP Verification</h1>
+<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+<%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+
+<%= form_with url: otp_verification_path(@otp_verification), method: :patch do |form| %>
+  <%= form.label :otp, "OTP" %>
+  <%= form.text_field :otp, required: true %>
+  <%= form.submit "Check OTP" %>
+<% end %>

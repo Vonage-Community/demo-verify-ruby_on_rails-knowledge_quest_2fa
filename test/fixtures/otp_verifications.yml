@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  request_id: MyString
+  verified: false
+  verified_at: 2025-05-16 14:23:44
+
+two:
+  request_id: MyString
+  verified: false
+  verified_at: 2025-05-16 14:23:44
