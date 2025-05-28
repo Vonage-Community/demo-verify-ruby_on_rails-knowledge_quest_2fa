@@ -64,3 +64,14 @@ You'll need to set up a Vonage application to manage the capabilities and obtain
     User.create!(email_address: 'YOUR-EMAIL-ADDRESS', password: 'YOUR-PASSWORD', phone_number: 'YOUR-PHONE_NUMBER')
     ```
     > Note: the phone number should be in [E.164](https://en.wikipedia.org/wiki/E.164) format, which the country code, but without being prepended by a `+`, for example a UK number might look like this: `447900000000`.
+
+## Useful Links
+
+- [Vonage Verify API Documentation](https://developer.vonage.com/en/verify/overview)
+- [Vonage Verify API Specification](https://developer.vonage.com/en/api/verify.v2)
+- [Vonage Verify API Start Verficiation Ruby Code Snippet](https://developer.vonage.com/en/verify/code-snippets/send-request-sms-v2?source=verify&lang=ruby)
+- [Vonage Verify API Check Code Ruby Code Snippet](https://developer.vonage.com/en/verify/code-snippets/check-verification-code-v2?source=verify&lang=ruby)
+- [Vonage Ruby SDK](https://github.com/Vonage/vonage-ruby-sdk)
+- [Vonage Rails Initializer](https://github.com/Vonage/vonage-rails)
+- [Rails Guides: Authentication](https://guides.rubyonrails.org/security.html#authentication)
+- [Rails Video Guide: Authentication Generator](https://www.youtube.com/watch?v=4q1RWZABhKE)
